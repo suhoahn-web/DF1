@@ -1,0 +1,28 @@
+# data: raw archives and large intermediates stay out of the repo
+data/raw/
+data/interim/
+data/processed/*.parquet
+results/predictions/*.parquet
+results/tft/*.parquet
+results/tft/*.bak
+
+# local logs and caches
+results/*.log
+*.pyc
+__pycache__/
+.pytest_cache/
+lightning_logs/
+
+# large binaries
+*.pt
+*.7z
+*.zip
+
+# internal working documents — not part of the reproduction repo
+Literature Review/
+라이팅/
+target journal/
+CLAUDE.md
+MODEL_ARCHITECTURE_SPEC.md
+데이터/
+.claude/

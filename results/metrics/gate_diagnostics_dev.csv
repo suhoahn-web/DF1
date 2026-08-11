@@ -1,0 +1,2 @@
+gate_mean,gate_median,gate_std,gate_p10,gate_p90,gate_mean_promo,gate_mean_nonpromo,gate_mean_holiday,gate_mean_highvol,gate_mean_normal
+0.65261644,0.7314978,0.24869722,0.232681243121624,0.8962110221385956,0.3542364,0.6957998,0.5042204,0.77620465,0.6886671

@@ -1,0 +1,48 @@
+# configs/tcn_gate.yaml
+# Residual TCN + context gate hyperparameters (spec §4-§7, §14).
+# Selection only on validation portions of the OOF period; never on folds/holdout.
+
+tcn:
+  lookback: 28                # days of history per sample; alt 56
+  channels:                   # input channel order for seq_x [C, L]
+    - residual_scaled
+    - sales_scaled
+    - base_oof_scaled
+    - onpromotion
+    - is_holiday
+    - cv_28
+    - zero_flag
+  # frozen 2026-08-10 from scripts/tune_tcn.py (selection: gate_train AO WAPE;
+  # folds/holdout untouched). Smallest model won at dev scale.
+  hidden: 32
+  kernel_size: 3
+  dropout: 0.2
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  batch_size: 512
+  max_epochs: 60
+  early_stop_patience: 8
+  huber_delta: 1.0
+  val_fraction: 0.15          # tail of tcn_train period used for early stopping
+
+scaling:
+  # residual/sales scaled by rolling_mean_28 + 1.0 at the origin (spec §5;
+  # +1 floor prevents zero-demand series from dominating scaled losses)
+  eps: 1.0e-6                 # kept for feature denominators only
+  clip_scaled: 10.0           # winsorize extreme scaled residuals
+
+gate:
+  # sparsity regularizer L = L1 + lambda * mean(g); selected 2026-08-10 on
+  # gate_train WAPE only (scripts/tune_gate_lambda.py); sensitivity in appendix
+  sparsity_lambda: 0.1
+  hidden: 64
+  hidden2: 32
+  dropout: 0.1
+  lr: 1.0e-3
+  weight_decay: 1.0e-5
+  batch_size: 1024
+  max_epochs: 80
+  early_stop_patience: 10
+  val_fraction: 0.15          # tail of gate_train period used for early stopping
+
+seed: 20260810
