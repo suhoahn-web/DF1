@@ -18,7 +18,7 @@ lightning_logs/
 *.7z
 *.zip
 
-# internal working documents — not part of the reproduction repo
+# internal working documents (local-only; Korean folder names are literal paths)
 Literature Review/
 라이팅/
 target journal/
@@ -26,3 +26,4 @@ CLAUDE.md
 MODEL_ARCHITECTURE_SPEC.md
 데이터/
 .claude/
+scripts/15_build_docx.py
